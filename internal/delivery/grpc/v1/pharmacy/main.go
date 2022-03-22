@@ -2,6 +2,7 @@ package pharmacy
 
 import (
 	"context"
+
 	"github.com/bhankey/pharmacy-automatization-pharmacy/internal/entities"
 	"github.com/bhankey/pharmacy-automatization-pharmacy/pkg/api/pharmacyproto"
 )
@@ -9,10 +10,10 @@ import (
 type GRPCHandler struct {
 	pharmacyproto.UnimplementedPharmacyServiceServer // Must be
 
-	pharmacySrv PharmacySrv
+	pharmacySrv Srv
 }
 
-type PharmacySrv interface {
+type Srv interface {
 	GetBatchOfPharmacies(
 		ctx context.Context,
 		lastPharmacyID int,
@@ -21,7 +22,7 @@ type PharmacySrv interface {
 	CreatePharmacy(ctx context.Context, pharmacy entities.Pharmacy) error
 }
 
-func NewPharmacyGRPCHandler(pharmacySrv PharmacySrv) *GRPCHandler {
+func NewPharmacyGRPCHandler(pharmacySrv Srv) *GRPCHandler {
 	return &GRPCHandler{
 		UnimplementedPharmacyServiceServer: pharmacyproto.UnimplementedPharmacyServiceServer{},
 		pharmacySrv:                        pharmacySrv,

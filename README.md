@@ -11,6 +11,7 @@ This project is made for university work. This microservice for working with pha
 - api - any kind of API or description of project
 
 Tasks:
-- [ ] Think about client error handling 
-- [x] Check :)
+- [x] Think about client error handling 
+- [x] Move apperror & interceptors package to other repo
+- [ ] Add Jaeger and OpenTracing
 

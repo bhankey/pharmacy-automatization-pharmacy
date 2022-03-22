@@ -4,9 +4,10 @@ package pharmacyService;
 option go_package = "api/pharmacyproto";
 
 import "validate/validate.proto";
-// import "google/protobuf/timestamp.proto";
 import "google/protobuf/empty.proto";
 
+
+// For error handling use "google.golang.org/grpc/status"
 message Pharmacy {
   int64 id = 1;
   string name = 2;

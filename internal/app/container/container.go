@@ -1,7 +1,7 @@
 package container
 
 import (
-	"github.com/bhankey/pharmacy-automatization-pharmacy/pkg/logger"
+	"github.com/bhankey/go-utils/pkg/logger"
 	"github.com/jmoiron/sqlx"
 )
 

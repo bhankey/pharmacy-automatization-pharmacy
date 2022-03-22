@@ -2,14 +2,19 @@ package pharmacy
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/bhankey/go-utils/pkg/apperror"
 	"github.com/bhankey/pharmacy-automatization-pharmacy/internal/entities"
 	"github.com/bhankey/pharmacy-automatization-pharmacy/pkg/api/pharmacyproto"
 	"google.golang.org/protobuf/types/known/emptypb"
 )
 
 func (h *GRPCHandler) CreatePharmacy(ctx context.Context, req *pharmacyproto.NewPharmacy) (*emptypb.Empty, error) {
+	errBase := fmt.Sprintf("pharmacy.CreatePharmacy(%v)", req)
+
 	if err := req.ValidateAll(); err != nil {
-		return nil, err
+		return nil, apperror.NewClientError(apperror.WrongRequest, err)
 	}
 
 	err := h.pharmacySrv.CreatePharmacy(ctx, entities.Pharmacy{
@@ -22,20 +27,25 @@ func (h *GRPCHandler) CreatePharmacy(ctx context.Context, req *pharmacyproto.New
 		},
 	})
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("%s: failed to create pharmacy: %w", errBase, err)
 	}
 
 	return &emptypb.Empty{}, nil
 }
 
-func (h *GRPCHandler) GetPharmacies(ctx context.Context, req *pharmacyproto.PaginationRequest) (*pharmacyproto.Pharmacies, error) {
+func (h *GRPCHandler) GetPharmacies(
+	ctx context.Context,
+	req *pharmacyproto.PaginationRequest,
+) (*pharmacyproto.Pharmacies, error) {
+	errBase := fmt.Sprintf("pharmacy. GetPharmacies(%v)", req)
+
 	if err := req.ValidateAll(); err != nil {
-		return nil, err
+		return nil, apperror.NewClientError(apperror.WrongRequest, err)
 	}
 
 	pharmacies, err := h.pharmacySrv.GetBatchOfPharmacies(ctx, int(req.GetLastId()), int(req.GetLimit()))
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("%s: failed to get pharmacies: %w", errBase, err)
 	}
 
 	resp := make([]*pharmacyproto.Pharmacy, 0, len(pharmacies))
