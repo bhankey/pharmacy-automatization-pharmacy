@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/bhankey/pharmacy-automatization-pharmacy/internal/apperror"
+	"github.com/bhankey/go-utils/pkg/apperror"
 	"github.com/bhankey/pharmacy-automatization-pharmacy/internal/entities"
 	"github.com/bhankey/pharmacy-automatization-pharmacy/pkg/api/pharmacyproto"
 	"google.golang.org/protobuf/types/known/emptypb"
